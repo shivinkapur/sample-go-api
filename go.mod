@@ -1,4 +1,4 @@
-module gituhb.com/shivinkapur/sample-golang-api
+module github.com/shivinkapur/sample-go-api
 
 go 1.20
 
