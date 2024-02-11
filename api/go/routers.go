@@ -14,6 +14,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/shivinkapur/sample-go-api/api/entities"
 )
 
 // Route is the information for every URI.
@@ -61,6 +62,15 @@ func DefaultHandleFunc(c *gin.Context) {
 	c.String(http.StatusNotImplemented, "501 not implemented")
 }
 
+// Index is the index handler.
+func Index(c *gin.Context) {
+	c.String(http.StatusOK, "Hello World!")
+}
+
+func Version(c *gin.Context) {
+	c.JSON(http.StatusOK, entities.VERSION)
+}
+
 type ApiHandleFunctions struct {
 
 	// Routes for the PetAPI part of the API
@@ -73,6 +83,18 @@ type ApiHandleFunctions struct {
 
 func getRoutes(handleFunctions ApiHandleFunctions) []Route {
 	return []Route{
+		{
+			"Index",
+			http.MethodGet,
+			"/api/v3",
+			Index,
+		},
+		{
+			"Version",
+			http.MethodGet,
+			"/api/v3/version",
+			Version,
+		},
 		{
 			"AddPet",
 			http.MethodPost,

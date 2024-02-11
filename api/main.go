@@ -11,15 +11,30 @@
 package main
 
 import (
+	"encoding/json"
 	"log"
 
 	// WARNING!
 	// Pass --git-repo-id and --git-user-id properties when generating the code
 	//
+
+	"github.com/shivinkapur/sample-go-api/api/entities"
 	sw "github.com/shivinkapur/sample-go-api/api/go"
+
+	_ "embed"
 )
 
+//go:embed version.json
+var bytesVersion []byte
+
 func main() {
+
+	err := json.Unmarshal(bytesVersion, &entities.VERSION)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	routes := sw.ApiHandleFunctions{}
 
 	log.Printf("Server started")
