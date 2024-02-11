@@ -1,0 +1,3 @@
+#!/bin/sh
+
+go clean -testcache && GIN_MODE=release go test -v -count=1 -cover -parallel=1 ./...
