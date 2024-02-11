@@ -35,7 +35,7 @@ func TestUserAPI_GetUserByName(t *testing.T) {
 
 	// Check the user fields
 	expectedUser := User{
-		Id:         1,
+		Id:         "1",
 		Username:   "user1",
 		FirstName:  "John",
 		LastName:   "Doe",

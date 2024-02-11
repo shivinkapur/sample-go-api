@@ -38,6 +38,14 @@ The [api.yaml](/api.yaml) file holds the OpenAPI spec for this repo.
 openapi-generator generate -i sample_api.yaml -g go-gin-server -o ./api --git-user-id shivinkapur --git-repo-id sample-go-api --package-name api --api-package api
 ```
 
+### API validation
+
+Run the following command to validate your OpenAPI spec
+
+```(bash)
+openapi-generator validate -i sample_api.yaml
+```
+
 ## Build the app
 
 Build the app locally using the following command on your root folder:

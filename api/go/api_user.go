@@ -52,7 +52,7 @@ func (api *UserAPI) GetUserByName(c *gin.Context) {
 	log.Print("Username is: ", username)
 
 	user := &User{
-		Id:         1,
+		Id:         "1",
 		Username:   "user1",
 		FirstName:  "John",
 		LastName:   "Doe",
