@@ -7,12 +7,19 @@ export BUILD_TIMESTAMP=$(echo $BUILD_TIMESTAMP)
 echo 'Build Timestamp:' $BUILD_TIMESTAMP
 
 # capture current commit hash
+unset $GITHUB_SHA
+GITHUB_SHA=$(git log -1 --format="%H")
+export GITHUB_SHA=$(echo $GITHUB_SHA)
 echo 'Commit:' $GITHUB_SHA
 
 # capture current branch name
+unset $GITHUB_REF_NAME
+GITHUB_REF_NAME=$(git symbolic-ref --short HEAD)
+export GITHUB_REF_NAME=$(echo $GITHUB_REF_NAME)
 echo 'Branch:' $GITHUB_REF_NAME
 
 # capture root
+unset $PROJECT_ROOT
 PROJECT_ROOT=$(pwd)
 echo 'Project Root:' $PROJECT_ROOT
 

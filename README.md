@@ -43,7 +43,7 @@ openapi-generator generate -i sample_api.yaml -g go-gin-server -o ./api --git-us
 Build the app locally using the following command on your root folder:
 
 ```(bash)
-./build.sh
+./build_local.sh
 ```
 
 ## Test the app
