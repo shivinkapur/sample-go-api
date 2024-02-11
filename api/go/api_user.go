@@ -11,8 +11,13 @@
 package api
 
 import (
+	"log"
+	"strings"
+
 	"github.com/gin-gonic/gin"
 )
+
+const PATH_PARAM_USERNAME = "username"
 
 type UserAPI struct {
 }
@@ -41,8 +46,23 @@ func (api *UserAPI) DeleteUser(c *gin.Context) {
 // Get /api/v3/user/:username
 // Get user by user name
 func (api *UserAPI) GetUserByName(c *gin.Context) {
-	// Your handler implementation
-	c.JSON(200, gin.H{"status": "OK"})
+
+	username := strings.TrimSpace(c.Param(PATH_PARAM_USERNAME))
+
+	log.Print("Username is: ", username)
+
+	user := &User{
+		Id:         1,
+		Username:   "user1",
+		FirstName:  "John",
+		LastName:   "Doe",
+		Email:      "johndoe1@ok.com",
+		Password:   "123456",
+		Phone:      "1234567890",
+		UserStatus: 1,
+	}
+
+	c.JSON(200, user)
 }
 
 // Get /api/v3/user/login
