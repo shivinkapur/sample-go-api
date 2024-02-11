@@ -603,9 +603,9 @@ components:
       type: object
       properties:
         id:
-          type: integer
-          format: int64
-          example: 10
+          type: string
+          format: uuid
+          example: d5f6e0c4-7e4b-4e4e-8f0f-0e4f3f8e4e4e
         petId:
           type: integer
           format: int64
@@ -633,9 +633,9 @@ components:
       type: object
       properties:
         id:
-          type: integer
-          format: int64
-          example: 100000
+          type: string
+          format: uuid
+          example: d5f6e0c4-7e4b-4e4e-8f0f-0e4f3f8e4e4e
         username:
           type: string
           example: fehguy
@@ -681,9 +681,9 @@ components:
       type: object
       properties:
         id:
-          type: integer
-          format: int64
-          example: 10
+          type: string
+          format: uuid
+          example: d290f1ee-6c54-4b01-90e6-d701748f0851
         username:
           type: string
           example: theUser
@@ -713,8 +713,8 @@ components:
       type: object
       properties:
         id:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
         name:
           type: string
       xml:
@@ -726,9 +726,9 @@ components:
       type: object
       properties:
         id:
-          type: integer
-          format: int64
-          example: 10
+          type: string
+          format: uuid
+          example: d290f1ee-6c54-4b01-90e6-d701748f0851
         name:
           type: string
           example: doggie

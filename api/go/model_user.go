@@ -11,7 +11,7 @@
 package api
 
 type User struct {
-	Id int64 `json:"id,omitempty"`
+	Id string `json:"id,omitempty"`
 
 	Username string `json:"username,omitempty"`
 

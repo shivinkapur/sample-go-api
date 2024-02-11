@@ -19,3 +19,7 @@ fi
 if [[ -z "${GIT_BRANCH}" ]]; then
     export GIT_BRANCH="$BRANCH_NAME@$GIT_COMMIT" 
 fi
+
+if [[ -z "${DB_CONNECTIONSTRING}" ]]; then
+    export DB_CONNECTIONSTRING="postgres://user:pass@localhost/postgres?sslmode=disable"
+fi
