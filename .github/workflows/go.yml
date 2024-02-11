@@ -16,7 +16,7 @@ jobs:
       success() && contains('refs/heads/main', github.ref)
     steps:
       - name: Checkout source code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4.1.1
         with:
           fetch-depth: 1
           path: github.com/shivinkapur/sample-go-api
@@ -53,7 +53,7 @@ jobs:
     if: success()
     steps:
       - name: Checkout source code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4.1.1
         with:
           fetch-depth: 1
           path: github.com/shivinkapur/sample-go-api
