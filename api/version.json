@@ -1,0 +1,7 @@
+{
+  "commit_id": "${GIT_COMMIT}",
+  "build_timestamp": "${TAG_DATE}",
+  "branch_ref": "${GIT_BRANCH}",
+  "branch": "${BRANCH_NAME}",
+  "build_tag": "${BUILD_TAG}"
+}
