@@ -24,3 +24,7 @@ go.work
 
 # Build files
 target/*
+
+# Local env file(s)
+config/local_env.sh
+.vscode/local.env

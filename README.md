@@ -67,3 +67,68 @@ or if you have already run the build script, you can simply
 ```(bash)
 ./target/api
 ```
+
+### Run the app
+
+To run the go modules locally;
+
+Create a file local_env.sh under project_root>cloud>config folder with the following content:
+
+```(bash)
+#!/bin/bash
+
+if [[ -z "${SAMPLE_USER_DATA}" ]]; then
+    export SAMPLE_USER_DATA="/path-to-repo//config/user_data.json"
+fi
+
+if [[ -z "${GIT_COMMIT}" ]]; then
+    export GIT_COMMIT=$(git rev-parse HEAD)
+fi
+
+if [[ -z "${TAG_DATE}" ]]; then
+    export TAG_DATE=$(date)
+fi
+
+if [[ -z "${BRANCH_NAME}" ]]; then
+    export BRANCH_NAME=$(git branch --show-current)
+fi
+
+if [[ -z "${GIT_BRANCH}" ]]; then
+    export GIT_BRANCH="$BRANCH_NAME@$GIT_COMMIT" 
+fi
+
+```
+
+
+### Using VSCode
+
+If you are using VSCode for this project, you can create the following launch file and local.env file under the `.vscode` folder
+
+launch.json
+
+```(json)
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Run API",
+      "type": "go",
+      "request": "launch",
+      "mode": "auto",
+      "program": "${workspaceFolder}/api",
+      "envFile": "${workspaceFolder}/.vscode/local.env"
+    },
+  ]
+}
+```
+
+local.env
+
+```(bash)
+SAMPLE_USER_DATA="/path-to-repo/sample-go-api/config/user_data.json"
+```
+
+Note: Make sure to change the references to your relative path for the project
