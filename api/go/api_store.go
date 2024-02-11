@@ -18,30 +18,29 @@ type StoreAPI struct {
 }
 
 // Delete /api/v3/store/order/:orderId
-// Delete purchase order by ID 
+// Delete purchase order by ID
 func (api *StoreAPI) DeleteOrder(c *gin.Context) {
 	// Your handler implementation
 	c.JSON(200, gin.H{"status": "OK"})
 }
 
 // Get /api/v3/store/inventory
-// Returns pet inventories by status 
+// Returns pet inventories by status
 func (api *StoreAPI) GetInventory(c *gin.Context) {
 	// Your handler implementation
 	c.JSON(200, gin.H{"status": "OK"})
 }
 
 // Get /api/v3/store/order/:orderId
-// Find purchase order by ID 
+// Find purchase order by ID
 func (api *StoreAPI) GetOrderById(c *gin.Context) {
 	// Your handler implementation
 	c.JSON(200, gin.H{"status": "OK"})
 }
 
 // Post /api/v3/store/order
-// Place an order for a pet 
+// Place an order for a pet
 func (api *StoreAPI) PlaceOrder(c *gin.Context) {
 	// Your handler implementation
 	c.JSON(200, gin.H{"status": "OK"})
 }
-

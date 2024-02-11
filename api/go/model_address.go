@@ -11,7 +11,6 @@
 package api
 
 type Address struct {
-
 	Street string `json:"street,omitempty"`
 
 	City string `json:"city,omitempty"`

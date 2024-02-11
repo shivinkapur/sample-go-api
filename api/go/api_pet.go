@@ -18,58 +18,57 @@ type PetAPI struct {
 }
 
 // Post /api/v3/pet
-// Add a new pet to the store 
+// Add a new pet to the store
 func (api *PetAPI) AddPet(c *gin.Context) {
 	// Your handler implementation
 	c.JSON(200, gin.H{"status": "OK"})
 }
 
 // Delete /api/v3/pet/:petId
-// Deletes a pet 
+// Deletes a pet
 func (api *PetAPI) DeletePet(c *gin.Context) {
 	// Your handler implementation
 	c.JSON(200, gin.H{"status": "OK"})
 }
 
 // Get /api/v3/pet/findByStatus
-// Finds Pets by status 
+// Finds Pets by status
 func (api *PetAPI) FindPetsByStatus(c *gin.Context) {
 	// Your handler implementation
 	c.JSON(200, gin.H{"status": "OK"})
 }
 
 // Get /api/v3/pet/findByTags
-// Finds Pets by tags 
+// Finds Pets by tags
 func (api *PetAPI) FindPetsByTags(c *gin.Context) {
 	// Your handler implementation
 	c.JSON(200, gin.H{"status": "OK"})
 }
 
 // Get /api/v3/pet/:petId
-// Find pet by ID 
+// Find pet by ID
 func (api *PetAPI) GetPetById(c *gin.Context) {
 	// Your handler implementation
 	c.JSON(200, gin.H{"status": "OK"})
 }
 
 // Put /api/v3/pet
-// Update an existing pet 
+// Update an existing pet
 func (api *PetAPI) UpdatePet(c *gin.Context) {
 	// Your handler implementation
 	c.JSON(200, gin.H{"status": "OK"})
 }
 
 // Post /api/v3/pet/:petId
-// Updates a pet in the store with form data 
+// Updates a pet in the store with form data
 func (api *PetAPI) UpdatePetWithForm(c *gin.Context) {
 	// Your handler implementation
 	c.JSON(200, gin.H{"status": "OK"})
 }
 
 // Post /api/v3/pet/:petId/uploadImage
-// uploads an image 
+// uploads an image
 func (api *PetAPI) UploadFile(c *gin.Context) {
 	// Your handler implementation
 	c.JSON(200, gin.H{"status": "OK"})
 }
-

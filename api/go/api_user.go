@@ -18,51 +18,50 @@ type UserAPI struct {
 }
 
 // Post /api/v3/user
-// Create user 
+// Create user
 func (api *UserAPI) CreateUser(c *gin.Context) {
 	// Your handler implementation
 	c.JSON(200, gin.H{"status": "OK"})
 }
 
 // Post /api/v3/user/createWithList
-// Creates list of users with given input array 
+// Creates list of users with given input array
 func (api *UserAPI) CreateUsersWithListInput(c *gin.Context) {
 	// Your handler implementation
 	c.JSON(200, gin.H{"status": "OK"})
 }
 
 // Delete /api/v3/user/:username
-// Delete user 
+// Delete user
 func (api *UserAPI) DeleteUser(c *gin.Context) {
 	// Your handler implementation
 	c.JSON(200, gin.H{"status": "OK"})
 }
 
 // Get /api/v3/user/:username
-// Get user by user name 
+// Get user by user name
 func (api *UserAPI) GetUserByName(c *gin.Context) {
 	// Your handler implementation
 	c.JSON(200, gin.H{"status": "OK"})
 }
 
 // Get /api/v3/user/login
-// Logs user into the system 
+// Logs user into the system
 func (api *UserAPI) LoginUser(c *gin.Context) {
 	// Your handler implementation
 	c.JSON(200, gin.H{"status": "OK"})
 }
 
 // Get /api/v3/user/logout
-// Logs out current logged in user session 
+// Logs out current logged in user session
 func (api *UserAPI) LogoutUser(c *gin.Context) {
 	// Your handler implementation
 	c.JSON(200, gin.H{"status": "OK"})
 }
 
 // Put /api/v3/user/:username
-// Update user 
+// Update user
 func (api *UserAPI) UpdateUser(c *gin.Context) {
 	// Your handler implementation
 	c.JSON(200, gin.H{"status": "OK"})
 }
-
