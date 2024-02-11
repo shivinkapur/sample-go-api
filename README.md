@@ -53,3 +53,17 @@ Run the following command on your root folder:
 ```(bash)
 ./test.sh
 ```
+
+### Run the API module
+
+To run the API module, you can use the following command from your root folder:
+
+```(bash)
+go run api/main.go
+```
+
+or if you have already run the build script, you can simply
+
+```(bash)
+./target/api
+```
