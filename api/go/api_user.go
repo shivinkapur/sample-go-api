@@ -11,10 +11,14 @@
 package api
 
 import (
+	"errors"
+	"fmt"
 	"log"
+	"net/http"
 	"strings"
 
 	"github.com/gin-gonic/gin"
+	"github.com/shivinkapur/sample-go-api/persistence"
 )
 
 const PATH_PARAM_USERNAME = "username"
@@ -51,18 +55,25 @@ func (api *UserAPI) GetUserByName(c *gin.Context) {
 
 	log.Print("Username is: ", username)
 
-	user := &User{
-		Id:         "1",
-		Username:   "user1",
-		FirstName:  "John",
-		LastName:   "Doe",
-		Email:      "johndoe1@ok.com",
-		Password:   "123456",
-		Phone:      "1234567890",
-		UserStatus: 1,
+	repository := persistence.GetRepository()
+	user, err := repository.GetUserByUserName(username)
+	if err != nil {
+		if errors.Is(err, persistence.ErrUserNotFound) {
+			log.Printf("ERROR: %+v", err)
+			c.AbortWithError(http.StatusNotFound, fmt.Errorf("User not found: %q", username))
+			return
+		}
+		log.Printf("ERROR: %+v", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"message": "Internal Server Error"})
 	}
 
-	c.JSON(200, user)
+	userUIModel := User{
+		Id:        user.Id,
+		FirstName: user.FirstName,
+		LastName:  user.LastName,
+	}
+
+	c.JSON(http.StatusOK, userUIModel)
 }
 
 // Get /api/v3/user/login
