@@ -57,7 +57,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Question'
+                $ref: '#/components/schemas/Questions'
         "500":
           description: Invalid username supplied
   /user:
@@ -213,6 +213,10 @@ components:
         creator:
           type: string
           format: uuid
+    Questions:
+      type: array
+      items:
+        $ref: '#/components/schemas/Question'
     Tag:
       type: object
       properties:

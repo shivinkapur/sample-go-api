@@ -11,21 +11,89 @@
 package api
 
 import (
+	"encoding/json"
+	"io"
+	"log"
+	"net/http"
+	"sync"
+
 	"github.com/gin-gonic/gin"
 )
 
 type QuestionAPI struct {
 }
 
+type Questions struct {
+	question map[string]Question
+	mu       sync.RWMutex
+}
+
+func NewQuestions() *Questions {
+	q := &Questions{
+		question: make(map[string]Question),
+	}
+
+	q.question["1"] = Question{
+		Id:      "1",
+		Title:   "Question 1",
+		Content: "asbc",
+		Creator: "1276-47261",
+	}
+
+	q.question["2"] = Question{
+		Id:      "2",
+		Title:   "Question 2",
+		Content: "asbc",
+		Creator: "1276-474121",
+	}
+
+	return q
+}
+
+var questions = NewQuestions()
+
 // Post /api/v3/questions
 // Create question
 func (api *QuestionAPI) CreateQuestion(c *gin.Context) {
+	// read the request body
+	content, err := io.ReadAll(c.Request.Body)
+	if err != nil {
+		log.Printf("ERROR: %+v", err)
+		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": "Invalid request" + err.Error()})
+		return
+	}
+
+	var question Question
+	err = json.Unmarshal([]byte(content), &question)
+	if err != nil {
+		log.Printf("ERROR: %+v", err)
+		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": "Invalid request" + err.Error()})
+		return
+	}
+
+	questionId := question.Id
+
+	_, ok := questions.question[questionId]
+	if ok {
+		log.Printf("Error: question already exists")
+		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": "Question already exists"})
+	}
+
+	questions.question[questionId] = question
+
 	// Your handler implementation
-	c.JSON(200, gin.H{"status": "OK"})
+	c.JSON(http.StatusCreated, gin.H{"status": "OK"})
 }
 
 // Get /api/v3/questions
 func (api *QuestionAPI) GetAllQuestions(c *gin.Context) {
-	// Your handler implementation
-	c.JSON(200, gin.H{"status": "OK"})
+	log.Printf("Questions : %v", questions)
+
+	var results []Question
+	for _, question := range questions.question {
+		results = append(results, question)
+	}
+
+	// append(questionsResult, questions.question[])
+	c.JSON(http.StatusOK, results)
 }
