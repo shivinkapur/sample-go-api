@@ -18,4 +18,6 @@ type Question struct {
 	Content string `json:"content,omitempty"`
 
 	Creator string `json:"creator,omitempty"`
+
+	Votes int32 `json:"votes,omitempty"`
 }

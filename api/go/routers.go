@@ -84,6 +84,18 @@ func getRoutes(handleFunctions ApiHandleFunctions) []Route {
 			handleFunctions.QuestionAPI.GetAllQuestions,
 		},
 		{
+			"GetQuestionById",
+			http.MethodGet,
+			"/api/v3/question/:questionId",
+			handleFunctions.QuestionAPI.GetQuestionById,
+		},
+		{
+			"UpvoteQuestion",
+			http.MethodPost,
+			"/api/v3/question/:questionId/upvote",
+			handleFunctions.QuestionAPI.UpvoteQuestion,
+		},
+		{
 			"CreateUser",
 			http.MethodPost,
 			"/api/v3/user",

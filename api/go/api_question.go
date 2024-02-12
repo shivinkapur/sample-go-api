@@ -15,10 +15,14 @@ import (
 	"io"
 	"log"
 	"net/http"
+	"strings"
 	"sync"
+	"sync/atomic"
 
 	"github.com/gin-gonic/gin"
 )
+
+const PATH_PARAM_QUESTION_ID = "questionId"
 
 type QuestionAPI struct {
 }
@@ -38,6 +42,7 @@ func NewQuestions() *Questions {
 		Title:   "Question 1",
 		Content: "asbc",
 		Creator: "1276-47261",
+		Votes:   12,
 	}
 
 	q.question["2"] = Question{
@@ -45,6 +50,7 @@ func NewQuestions() *Questions {
 		Title:   "Question 2",
 		Content: "asbc",
 		Creator: "1276-474121",
+		Votes:   31,
 	}
 
 	return q
@@ -100,6 +106,49 @@ func (api *QuestionAPI) GetAllQuestions(c *gin.Context) {
 	}
 	questions.mu.RUnlock()
 
-	// append(questionsResult, questions.question[])
 	c.JSON(http.StatusOK, results)
+}
+
+// Get /api/v3/question/:questionId
+// Get question by id
+func (api *QuestionAPI) GetQuestionById(c *gin.Context) {
+	questionId := strings.TrimSpace(c.Param(PATH_PARAM_QUESTION_ID))
+	if questionId == "" {
+		log.Printf("Error: question id not present")
+		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": "Question id not present"})
+	}
+
+	questions.mu.RLock()
+	questionResult := questions.question[questionId]
+	questions.mu.RUnlock()
+
+	c.JSON(http.StatusOK, questionResult)
+}
+
+// Post /api/v3/question/:questionId/upvote
+// Upvote a question
+func (api *QuestionAPI) UpvoteQuestion(c *gin.Context) {
+	questionId := strings.TrimSpace(c.Param(PATH_PARAM_QUESTION_ID))
+	if questionId == "" {
+		log.Printf("Error: question id not present")
+		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": "Question id not present"})
+	}
+
+	questions.mu.RLock()
+	question := questions.question[questionId]
+	questions.mu.RUnlock()
+
+	currentVoteCount := question.Votes
+	newVoteCount := upvote(currentVoteCount)
+
+	questions.mu.Lock()
+	question.Votes = newVoteCount
+	questions.question[questionId] = question
+	questions.mu.Unlock()
+
+	c.JSON(http.StatusOK, gin.H{"status": "OK"})
+}
+
+func upvote(vountCount int32) int32 {
+	return atomic.AddInt32(&vountCount, 1)
 }

@@ -2,6 +2,7 @@ Dockerfile
 api/openapi.yaml
 go.mod
 go/README.md
+go/api_question.go
 go/model_api_response.go
 go/model_question.go
 go/model_tag.go

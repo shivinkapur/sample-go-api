@@ -27,6 +27,48 @@ tags:
 - name: user
   description: Operations about user
 paths:
+  /question/{questionId}/upvote:
+    post:
+      tags:
+      - question
+      summary: Upvote a question
+      description: Upvote a question
+      operationId: upvoteQuestion
+      parameters:
+      - name: questionId
+        in: path
+        description: 'The questionId that needs to be fetched.'
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: successful operation
+  /question/{questionId}:
+    get:
+      tags:
+      - question
+      summary: Get question by id
+      description: ""
+      operationId: getQuestionById
+      parameters:
+      - name: questionId
+        in: path
+        description: 'The questionId that needs to be fetched.'
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Question'
+        "400":
+          description: Invalid question id supplied
+        "404":
+          description: Question not found
   /questions:
     post:
       tags:
@@ -213,6 +255,9 @@ components:
         creator:
           type: string
           format: uuid
+        votes:
+          type: integer
+          example: 23
     Questions:
       type: array
       items:
