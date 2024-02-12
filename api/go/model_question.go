@@ -10,12 +10,12 @@
 
 package api
 
-type Address struct {
-	Street string `json:"street,omitempty"`
+type Question struct {
+	Id string `json:"id,omitempty"`
 
-	City string `json:"city,omitempty"`
+	Title string `json:"title,omitempty"`
 
-	State string `json:"state,omitempty"`
+	Content string `json:"content,omitempty"`
 
-	Zip string `json:"zip,omitempty"`
+	Creator string `json:"creator,omitempty"`
 }

@@ -10,8 +10,22 @@
 
 package api
 
-type Category struct {
-	Id int64 `json:"id,omitempty"`
+import (
+	"github.com/gin-gonic/gin"
+)
 
-	Name string `json:"name,omitempty"`
+type QuestionAPI struct {
+}
+
+// Post /api/v3/questions
+// Create question
+func (api *QuestionAPI) CreateQuestion(c *gin.Context) {
+	// Your handler implementation
+	c.JSON(200, gin.H{"status": "OK"})
+}
+
+// Get /api/v3/questions
+func (api *QuestionAPI) GetAllQuestions(c *gin.Context) {
+	// Your handler implementation
+	c.JSON(200, gin.H{"status": "OK"})
 }

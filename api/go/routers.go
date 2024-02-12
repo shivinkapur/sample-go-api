@@ -14,7 +14,6 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/shivinkapur/sample-go-api/api/entities"
 )
 
 // Route is the information for every URI.
@@ -62,21 +61,10 @@ func DefaultHandleFunc(c *gin.Context) {
 	c.String(http.StatusNotImplemented, "501 not implemented")
 }
 
-// Index is the index handler.
-func Index(c *gin.Context) {
-	c.String(http.StatusOK, "Hello World!")
-}
-
-func Version(c *gin.Context) {
-	c.JSON(http.StatusOK, entities.VERSION)
-}
-
 type ApiHandleFunctions struct {
 
-	// Routes for the PetAPI part of the API
-	PetAPI PetAPI
-	// Routes for the StoreAPI part of the API
-	StoreAPI StoreAPI
+	// Routes for the QuestionAPI part of the API
+	QuestionAPI QuestionAPI
 	// Routes for the UserAPI part of the API
 	UserAPI UserAPI
 }
@@ -84,100 +72,22 @@ type ApiHandleFunctions struct {
 func getRoutes(handleFunctions ApiHandleFunctions) []Route {
 	return []Route{
 		{
-			"Index",
-			http.MethodGet,
-			"/api/v3",
-			Index,
-		},
-		{
-			"Version",
-			http.MethodGet,
-			"/api/v3/version",
-			Version,
-		},
-		{
-			"AddPet",
+			"CreateQuestion",
 			http.MethodPost,
-			"/api/v3/pet",
-			handleFunctions.PetAPI.AddPet,
+			"/api/v3/questions",
+			handleFunctions.QuestionAPI.CreateQuestion,
 		},
 		{
-			"DeletePet",
-			http.MethodDelete,
-			"/api/v3/pet/:petId",
-			handleFunctions.PetAPI.DeletePet,
-		},
-		{
-			"FindPetsByStatus",
+			"GetAllQuestions",
 			http.MethodGet,
-			"/api/v3/pet/findByStatus",
-			handleFunctions.PetAPI.FindPetsByStatus,
-		},
-		{
-			"FindPetsByTags",
-			http.MethodGet,
-			"/api/v3/pet/findByTags",
-			handleFunctions.PetAPI.FindPetsByTags,
-		},
-		{
-			"GetPetById",
-			http.MethodGet,
-			"/api/v3/pet/:petId",
-			handleFunctions.PetAPI.GetPetById,
-		},
-		{
-			"UpdatePet",
-			http.MethodPut,
-			"/api/v3/pet",
-			handleFunctions.PetAPI.UpdatePet,
-		},
-		{
-			"UpdatePetWithForm",
-			http.MethodPost,
-			"/api/v3/pet/:petId",
-			handleFunctions.PetAPI.UpdatePetWithForm,
-		},
-		{
-			"UploadFile",
-			http.MethodPost,
-			"/api/v3/pet/:petId/uploadImage",
-			handleFunctions.PetAPI.UploadFile,
-		},
-		{
-			"DeleteOrder",
-			http.MethodDelete,
-			"/api/v3/store/order/:orderId",
-			handleFunctions.StoreAPI.DeleteOrder,
-		},
-		{
-			"GetInventory",
-			http.MethodGet,
-			"/api/v3/store/inventory",
-			handleFunctions.StoreAPI.GetInventory,
-		},
-		{
-			"GetOrderById",
-			http.MethodGet,
-			"/api/v3/store/order/:orderId",
-			handleFunctions.StoreAPI.GetOrderById,
-		},
-		{
-			"PlaceOrder",
-			http.MethodPost,
-			"/api/v3/store/order",
-			handleFunctions.StoreAPI.PlaceOrder,
+			"/api/v3/questions",
+			handleFunctions.QuestionAPI.GetAllQuestions,
 		},
 		{
 			"CreateUser",
 			http.MethodPost,
 			"/api/v3/user",
 			handleFunctions.UserAPI.CreateUser,
-		},
-		{
-			"CreateUsersWithListInput",
-			http.MethodPost,
-			"/api/v3/user/createWithList",
-			handleFunctions.UserAPI.CreateUsersWithListInput,
 		},
 		{
 			"DeleteUser",
@@ -190,18 +100,6 @@ func getRoutes(handleFunctions ApiHandleFunctions) []Route {
 			http.MethodGet,
 			"/api/v3/user/:username",
 			handleFunctions.UserAPI.GetUserByName,
-		},
-		{
-			"LoginUser",
-			http.MethodGet,
-			"/api/v3/user/login",
-			handleFunctions.UserAPI.LoginUser,
-		},
-		{
-			"LogoutUser",
-			http.MethodGet,
-			"/api/v3/user/logout",
-			handleFunctions.UserAPI.LogoutUser,
 		},
 		{
 			"UpdateUser",
