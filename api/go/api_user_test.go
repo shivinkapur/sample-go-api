@@ -13,47 +13,6 @@ import (
 	"github.com/shivinkapur/sample-go-api/persistence/entities"
 )
 
-// todo: convert to integration test
-// func TestUserAPI_GetUserByName(t *testing.T) {
-// 	// Create a new Gin context for testing
-// 	w := httptest.NewRecorder()
-// 	c, _ := gin.CreateTestContext(w)
-// 	t.Setenv("DB_CONNECTIONSTRING", "something")
-
-// 	// Set up the test case
-// 	username := "user1"
-// 	c.AddParam(PATH_PARAM_USERNAME, username)
-
-// 	// Create a new instance of UserAPI
-// 	api := &UserAPI{}
-
-// 	// Call the GetUserByName function
-// 	api.GetUserByName(c)
-
-// 	// Check the response status code
-// 	if w.Code != http.StatusOK {
-// 		t.Errorf("Expected status code %d, but got %d", http.StatusOK, w.Code)
-// 	}
-
-// 	// Parse the response body
-// 	var user User
-// 	err := json.Unmarshal(w.Body.Bytes(), &user)
-// 	if err != nil {
-// 		t.Errorf("Failed to parse response body: %v", err)
-// 	}
-
-// 	// Check the user fields
-// 	expectedUser := User{
-// 		Id:        "1",
-// 		FirstName: "Jon",
-// 		LastName:  "Doe",
-// 	}
-
-// 	if !reflect.DeepEqual(user, expectedUser) {
-// 		t.Errorf("Expected user %+v, but got %+v", expectedUser, user)
-// 	}
-// }
-
 func TestUserAPI_GetUserByNameShivin(t *testing.T) {
 	// Create a new Gin context for testing
 	w := httptest.NewRecorder()
