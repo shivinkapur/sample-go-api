@@ -11,8 +11,10 @@
 package api
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
+	"io"
 	"log"
 	"net/http"
 	"strings"
@@ -29,8 +31,49 @@ type UserAPI struct {
 // Post /api/v3/user
 // Create user
 func (api *UserAPI) CreateUser(c *gin.Context) {
-	// Your handler implementation
-	c.JSON(200, gin.H{"status": "OK"})
+	// read the request body
+	content, err := io.ReadAll(c.Request.Body)
+	if err != nil {
+		log.Printf("ERROR: %+v", err)
+		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": "Invalid request" + err.Error()})
+		return
+	}
+
+	var user User
+	err = json.Unmarshal([]byte(content), &user)
+	if err != nil {
+		log.Printf("ERROR: %+v", err)
+		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": "Invalid request" + err.Error()})
+		return
+	}
+
+	persistenceModel, err := convertNewUserToPersistenceModel(user)
+	if err != nil {
+		log.Printf("ERROR: %+v", err)
+		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": "Invalid request" + err.Error()})
+		return
+	}
+
+	repository := persistence.GetRepository()
+	result, err := repository.AddUser(persistenceModel)
+	if err != nil {
+		if errors.Is(err, persistence.ErrUserAlreadyExists) {
+			log.Printf("ERROR: %+v", err)
+			c.AbortWithStatusJSON(http.StatusConflict, gin.H{"message": "User already exists"})
+			return
+		}
+		log.Printf("ERROR: %+v", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"message": "Internal Server Error"})
+		return
+	}
+
+	userUIModel, err := convertPersistenceModelToUser(result)
+	if err != nil {
+		log.Printf("ERROR: %+v", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"message": "Internal Server Error"})
+	}
+
+	c.JSON(http.StatusCreated, userUIModel)
 }
 
 // Post /api/v3/user/createWithList
@@ -67,10 +110,10 @@ func (api *UserAPI) GetUserByName(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"message": "Internal Server Error"})
 	}
 
-	userUIModel := User{
-		Id:        user.Id,
-		FirstName: user.FirstName,
-		LastName:  user.LastName,
+	userUIModel, err := convertPersistenceModelToUser(user)
+	if err != nil {
+		log.Printf("ERROR: %+v", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"message": "Internal Server Error"})
 	}
 
 	c.JSON(http.StatusOK, userUIModel)
