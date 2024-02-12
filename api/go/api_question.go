@@ -73,13 +73,17 @@ func (api *QuestionAPI) CreateQuestion(c *gin.Context) {
 
 	questionId := question.Id
 
+	questions.mu.RLock()
 	_, ok := questions.question[questionId]
 	if ok {
 		log.Printf("Error: question already exists")
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": "Question already exists"})
 	}
+	questions.mu.RUnlock()
 
+	questions.mu.Lock()
 	questions.question[questionId] = question
+	questions.mu.Unlock()
 
 	// Your handler implementation
 	c.JSON(http.StatusCreated, gin.H{"status": "OK"})
@@ -90,9 +94,11 @@ func (api *QuestionAPI) GetAllQuestions(c *gin.Context) {
 	log.Printf("Questions : %v", questions)
 
 	var results []Question
+	questions.mu.RLock()
 	for _, question := range questions.question {
 		results = append(results, question)
 	}
+	questions.mu.RUnlock()
 
 	// append(questionsResult, questions.question[])
 	c.JSON(http.StatusOK, results)
